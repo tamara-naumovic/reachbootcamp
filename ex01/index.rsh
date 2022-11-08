@@ -9,10 +9,12 @@ export const main = Reach.App(() => {
   const A = Participant('Tamara', {
     // Specify Tamara's interact interface here
     ...Player, //inherit functions from player
+    wager: UInt, //only Tamara can see the wager info - custom data
   });
   const B = Participant('Petar', {
     // Specify Petar's interact interface here
     ...Player,
+    acceptwager: Fun([UInt], Null),
   });
   init();
   // Tamara's hand
