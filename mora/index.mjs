@@ -8,6 +8,13 @@ const [ accMilica, accAleksa ] =
   await stdlib.newTestAccounts(2, startingBalance);
 console.log('Hello, Milica and Aleksa!');
 
+//--for tracking wagers
+const fmt = (x) =>stdlib.formatCurrency(x, 4); 
+const getBalance = async (who)=>fmt(await stdlib.balanceOf(who));
+const beforeMilica = await getBalance(accMilica); 
+const beforeAleksa = await getBalance(accAleksa); 
+//--
+
 console.log('Launching Mora Game');
 const ctcMilica = accMilica.contract(backend);
 const ctcAleksa = accAleksa.contract(backend, ctcMilica.getInfo());
@@ -37,11 +44,20 @@ console.log('Starting backends...');
 await Promise.all([
   backend.Milica(ctcMilica, {
     ...Player("Milica"),
+    wager: stdlib.parseCurrency(5),
   }),
   backend.Aleksa(ctcAleksa, {
     ...Player("Aleksa"),
+    acceptwager: (amt)=>{
+      console.log(`Aleksa accepts the wager of ${fmt(amt)}.`)
+    }
 
   }),
 ]);
 
+const afterMilica = await getBalance(accMilica);
+const afterAleksa = await getBalance(accAleksa);
+
+console.log(`Milica went from ${beforeMilica} to ${accMilica} `);
+console.log(`Aleksa went from ${beforeAleksa} to ${accAleksa} `);
 console.log('Goodbye, Milica and Aleksa!');
