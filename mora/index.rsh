@@ -1,5 +1,18 @@
 'reach 0.1';
 
+const winner = (hMil, hAle, resMil, resAle) => {
+  if (resMil == resAle) {
+    return 1;
+  } else if (hMil + hAle == resMil) {
+    return 2;
+  } else if (hMil + hAle == resAle) {
+    return 0;
+  } else {
+    return 1;
+  }
+};
+
+
 const Player = {
   getHand: Fun([], UInt), //returns a number 0 to 5, as a number of fingers played by the player
   getResult: Fun([], UInt), // returns a number 0 to 10 as a posible result, guessed by the player
@@ -28,6 +41,7 @@ export const main = Reach.App(() => {
     const resultAleksa = declassify(interact.getResult());
   });
   Player2.publish(handAleksa, resultAleksa);
+  const outcome = winner(handMilica, handAleksa, resultMilica, resultAleksa);
   commit();
 
   each([Player1, Player2], () => {
