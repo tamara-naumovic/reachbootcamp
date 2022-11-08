@@ -37,7 +37,7 @@ export const main = Reach.App(() => {
   const outcome = (handTamara+(4-handPetar))%3; //find the outcome
   const [forTamara, forPetar] =
     outcome == 2?[2,0]: //if Tamara wins she gets 2*wager
-    outcome == 2?[0,2]: //if Petar winds he gets 2*wager
+    outcome == 0?[0,2]: //if Petar winds he gets 2*wager
                 [1,1];  //if its a Draw they get what they wagered
     transfer(forTamara*amount).to(T); //transfering tokens of the wager
     transfer(forPetar*amount).to(P);
