@@ -23,15 +23,18 @@ const ctcAleksa = accAleksa.contract(backend, ctcMilica.getInfo());
 const HAND = [0, 1, 2, 3, 4, 5];
 const RESULTS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 const OUTCOME = ["Aleksa wins", "Draw", "Milica wins"];
+var help_hand=0; //trying to save the value of picked hand so i can enforce that Player cant guess a total less than the number of fingers they put out
 
 const Player = (Who) => ({
+  ...stdlib.hasRandom, //random from backend
   getHand: () => {
     const hand = Math.floor(Math.random() * 6); //get a number from 0 to 5
+    help_hand = hand;
     console.log(`${Who} played ${HAND[hand]}`); //ex Aleksa played 2
     return hand; //hand needs to be returned, because of the backend deffinition of the getHand fun
   },
   getResult: () => {
-    const result = Math.floor(Math.random() * 11); //guessing the total
+    const result = Math.floor(Math.random() * (11-help_hand)+help_hand); //guessing the total
     console.log(`${Who} expecting result: ${RESULTS[result]}`);
     return result; //returning the result to backend
   },
@@ -58,6 +61,6 @@ await Promise.all([
 const afterMilica = await getBalance(accMilica);
 const afterAleksa = await getBalance(accAleksa);
 
-console.log(`Milica went from ${beforeMilica} to ${accMilica} `);
-console.log(`Aleksa went from ${beforeAleksa} to ${accAleksa} `);
+console.log(`Milica went from ${beforeMilica} to ${afterMilica} `);
+console.log(`Aleksa went from ${beforeAleksa} to ${afterAleksa} `);
 console.log('Goodbye, Milica and Aleksa!');
