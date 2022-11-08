@@ -7,6 +7,13 @@ const startingBalance = stdlib.parseCurrency(100);
 
 const [ accTamara, accPetar ] =
   await stdlib.newTestAccounts(2, startingBalance);
+
+const fmt = (x) =>stdlib.formatCurrency(x, 4); //formating from micro algo to algo
+const getBalance = async (who)=>fmt(await stdlib.balanceOf(who)); //getting balance in previously defined format
+const beforeTamara = await getBalance(accTamara); //before wagering
+const beforePetar = await getBalance(accPetar); //before wagering
+
+
 console.log('Hello, Tamara and Petar!');
 
 const ctcTamara = accTamara.contract(backend);
@@ -30,13 +37,24 @@ const Player = (Who) =>({
 console.log('Starting backends...');
 await Promise.all([
   ctcTamara.p.Tamara({
-    ...Player('Tamara'),
     // implement Tamara's interact object here
+
+    ...Player('Tamara'),
+    wager: stdlib.parseCurrency(5) //Tamara bets 5 micro algos > from algos to micro algos
   }),
   ctcPetar.p.Petar({
-    ...Player('Petar'),
     // implement Petar's interact object here
+
+    ...Player('Petar'),
+    acceptwager: (amt)=>{
+      console.log(`Petar accepts the wager of ${fmt(amt)}.`);
+    },
   }),
 ]);
 
+const afterTamara = await getBalance(accTamara);
+const afterPetar = await getBalance(accPetar);
+
+console.log(`Tamara went from ${beforeTamara} to ${afterTamara} `);
+console.log(`Petar went from ${beforePetar} to ${afterPetar} `);
 console.log('Goodbye, Tamara and Petar!');
