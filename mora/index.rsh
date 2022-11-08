@@ -14,5 +14,24 @@ export const main = Reach.App(() => {
     ...Player,
   });
   init();
+
+  Player1.only(() => {
+    const handMilica = declassify(interact.getHand());
+    const resultMilica = declassify(interact.getResult());
+  });
+
+  Player1.publish(handMilica, resultMilica);
+  commit();
+
+  Player2.only(() => {
+    const handAleksa = declassify(interact.getHand());
+    const resultAleksa = declassify(interact.getResult());
+  });
+  Player2.publish(handAleksa, resultAleksa);
+  commit();
+
+  each([Player1, Player2], () => {
+    interact.seeOutcome(outcome);
+  });
  
 });

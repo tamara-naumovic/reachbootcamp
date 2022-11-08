@@ -36,8 +36,11 @@ const Player = (Who) => ({
 console.log('Starting backends...');
 await Promise.all([
   backend.Milica(ctcMilica, {
+    ...Player("Milica"),
   }),
   backend.Aleksa(ctcAleksa, {
+    ...Player("Aleksa"),
+
   }),
 ]);
 
