@@ -16,7 +16,7 @@ console.log('Starting backends...');
 await Promise.all([
   backend.Alice(ctcAlice, {
     ...stdlib.hasRandom,
-    // implement Alice's interact object here
+    // implement Alice's interact object here 
   }),
   backend.Bob(ctcBob, {
     ...stdlib.hasRandom,
