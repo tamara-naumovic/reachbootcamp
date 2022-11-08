@@ -21,14 +21,14 @@ export const main = Reach.App(() => {
   B.only(()=>{
     const price = declasify(interact.seePrice())
   })
-  B.publish(priceBidder);
+  B.publish(price);
   commit();
-  // The second one to publish always attaches
   C.only(()=>{
     const decription = declasify(interact.getDescription())
+    const payment = declassify(interact.payment);
   })
-  C.publish(priceBuyer);
+  C.publish(decription,payment)
+  .pay(payment);
   commit();
-  // write your program here
   exit();
 });
