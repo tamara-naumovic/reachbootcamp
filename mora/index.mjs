@@ -8,9 +8,30 @@ const [ accMilica, accAleksa ] =
   await stdlib.newTestAccounts(2, startingBalance);
 console.log('Hello, Milica and Aleksa!');
 
-console.log('Launching...');
+console.log('Launching Mora Game');
 const ctcMilica = accMilica.contract(backend);
 const ctcAleksa = accAleksa.contract(backend, ctcMilica.getInfo());
+
+
+const HAND = [0, 1, 2, 3, 4, 5];
+const RESULTS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+const OUTCOME = ["Aleksa wins", "Draw", "Milica wins"];
+
+const Player = (Who) => ({
+  getHand: () => {
+    const hand = Math.floor(Math.random() * 6); //get a number from 0 to 5
+    console.log(`${Who} played ${HAND[hand]}`); //ex Aleksa played 2
+    return hand; //hand needs to be returned, because of the backend deffinition of the getHand fun
+  },
+  getResult: () => {
+    const result = Math.floor(Math.random() * 11); //guessing the total
+    console.log(`${Who} expecting result: ${RESULTS[result]}`);
+    return result; //returning the result to backend
+  },
+  seeOutcome: (outcome) => {
+    console.log(`${Who} saw outcome ${OUTCOME[outcome]}`); //displaying the outcome to both parties
+  },
+});
 
 console.log('Starting backends...');
 await Promise.all([
