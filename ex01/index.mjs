@@ -22,7 +22,7 @@ const ctcPetar = accPetar.contract(backend, ctcTamara .getInfo());
 console.log('Launching Rock Paper Scissors...');
 
 const HAND = ['Rock', 'Paper', 'Scissors'];
-const OUTCOME = ['Tamara wins', 'Draw', 'Petar wins'];
+const OUTCOME = ['Petar wins', 'Draw', 'Tamara wins'];
 const Player = (Who) =>({
   getHand:()=>{
     const hand_num = Math.floor(Math.random()*3) //gives us 0 1 2, so we can know what did they choose in HAND array
