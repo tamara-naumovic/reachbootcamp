@@ -24,13 +24,14 @@ console.log('Launching Rock Paper Scissors...');
 const HAND = ['Rock', 'Paper', 'Scissors'];
 const OUTCOME = ['Petar wins', 'Draw', 'Tamara wins'];
 const Player = (Who) =>({
+  ...stdlib.hasRandom,
   getHand:()=>{
     const hand_num = Math.floor(Math.random()*3) //gives us 0 1 2, so we can know what did they choose in HAND array
     console.log(`${Who} played ${HAND[hand_num]}`);
     return hand_num; //.rsh says its a fun with no params [] and return UInt, so return hand_num needs to happen
   },
   seeOutcome:(outcome)=>{
-    console.log(`${Who} saw outcome ${OUTCOME[outcome]}`)
+    console.log(`${Who} saw outcome ${outcome} - ${OUTCOME[outcome]}`)
   }
 })
 
