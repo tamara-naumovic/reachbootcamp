@@ -4,24 +4,24 @@ const stdlib = loadStdlib(process.env);
 
 const startingBalance = stdlib.parseCurrency(100);
 
-const [ accAlice, accBob ] =
+const [ accTamara, accPetar ] =
   await stdlib.newTestAccounts(2, startingBalance);
-console.log('Hello, Alice and Bob!');
+console.log('Hello, Tamara and Petar!');
 
 console.log('Launching...');
-const ctcAlice = accAlice.contract(backend);
-const ctcBob = accBob.contract(backend, ctcAlice.getInfo());
+const ctcTamara = accTamara.contract(backend);
+const ctcPetar = accPetar.contract(backend, ctcTamara.getInfo());
 
 console.log('Starting backends...');
 await Promise.all([
-  backend.Alice(ctcAlice, {
+  backend.Tamara(ctcTamara, {
     ...stdlib.hasRandom,
-    // implement Alice's interact object here
+    // implement Tamara's interact object here
   }),
-  backend.Bob(ctcBob, {
+  backend.Petar(ctcPetar, {
     ...stdlib.hasRandom,
-    // implement Bob's interact object here
+    // implement Petar's interact object here
   }),
 ]);
 
-console.log('Goodbye, Alice and Bob!');
+console.log('Goodbye, Tamara and Petar!');
